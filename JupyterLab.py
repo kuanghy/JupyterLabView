@@ -8,6 +8,7 @@
 import os
 import sys
 import json
+import socket
 import subprocess
 import webview
 import jupyterlab
@@ -58,10 +59,18 @@ class ViewApp(object):
         self.lab_proc = proc
         return proc
 
+    def check_lab_server(self):
+        sock = socket.socket()
+        try:
+            sock.connect(("localhost", self.lab_port))
+            return True
+        except socket.eror:
+            return False
+
     def run(self):
         self.launch_jupyterlab()
-        __import__("time").sleep(10)
-        return webview.create_window("JupyterLab", self.lab_url)
+        webview.create_window("JupyterLab", "loading.html")
+        return self.lab_proc.terminate()
 
 
 if __name__ == "__main__":
