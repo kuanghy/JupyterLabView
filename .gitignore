@@ -76,6 +76,7 @@ target/
 # IPython
 profile_default/
 ipython_config.py
+notebooks/.ipython
 
 # pyenv
 .python-version
@@ -112,3 +113,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# notebooks
+notebooks

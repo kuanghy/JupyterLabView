@@ -284,7 +284,7 @@ c.NotebookApp.password_required = False
 c.NotebookApp.port = 12580
 
 ## 如果指定的端口不可用，则要尝试其他端口的数量.
-c.NotebookApp.port_retries = 50
+c.NotebookApp.port_retries = 0
 
 ## DISABLED: use %pylab or %matplotlib in the notebook to enable matplotlib.
 #c.NotebookApp.pylab = 'disabled'
@@ -671,7 +671,16 @@ c.NotebookApp.token = ''
 #c.ContentsManager.files_handler_params = {}
 
 ## Glob patterns to hide in file and directory listings.
-c.ContentsManager.hide_globs = ['__pycache__', '*.pyc', '*.pyo', '.DS_Store', '*.so', '*.dylib', '*~']
+c.ContentsManager.hide_globs = [
+    '__pycache__',
+    '*.pyc',
+    '*.pyo',
+    '.DS_Store',
+    '*.so',
+    '*.dylib',
+    '*~',
+    'Library',
+]
 
 ## Python callable or importstring thereof
 #

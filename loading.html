@@ -115,5 +115,17 @@
     <div class='loader--text'></div>
   </div>
 </div>
+
+<script type="text/javascript">
+var intv = self.setInterval("detectServiceThenJump()", 100);
+
+function detectServiceThenJump() {
+    pywebview.api.get_accessible_lab_url().then(function(response) {
+        if (response) {
+            window.location.href = response;
+        }
+    })
+}
+</script>
 </body>
 </html>
