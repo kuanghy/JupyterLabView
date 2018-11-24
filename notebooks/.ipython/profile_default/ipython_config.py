@@ -60,14 +60,14 @@ c.InteractiveShellApp.extensions = [
 #c.InteractiveShellApp.hide_initial_ns = True
 
 ## Configure matplotlib for interactive use with the default matplotlib backend.
-#c.InteractiveShellApp.matplotlib = None
+c.InteractiveShellApp.matplotlib = 'inline'
 
 ## Run the module as a script.
 #c.InteractiveShellApp.module_to_run = ''
 
 ## Pre-load matplotlib and numpy for interactive use, selecting a particular
 #  matplotlib backend and loop integration.
-#c.InteractiveShellApp.pylab = None
+c.InteractiveShellApp.pylab = 'inline'
 
 ## If true, IPython will populate the user namespace with numpy, pylab, etc. and
 #  an ``import *`` is done from numpy and pylab, when using pylab mode.
@@ -151,7 +151,7 @@ c.InteractiveShellApp.extensions = [
 
 ## 'all', 'last', 'last_expr' or 'none', specifying which nodes should be run
 #  interactively (displaying output from expressions).
-c.InteractiveShell.ast_node_interactivity = 'all'
+# c.InteractiveShell.ast_node_interactivity = 'all'
 
 ## A list of ast.NodeTransformer subclass instances, which will be applied to
 #  user input before code is run.
