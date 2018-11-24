@@ -1,0 +1,4 @@
+# ipython scripts
+
+%load_ext line_profiler
+# ex: %lprun -f function function(awdwad)

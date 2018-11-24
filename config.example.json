@@ -1,0 +1,6 @@
+{
+    "pythonPath": "/usr/bin/python",
+    "labPort": "12345",
+    "labLogPath": "/tmp/jupyterlab.log",
+    "labHome": "/tmp"
+}

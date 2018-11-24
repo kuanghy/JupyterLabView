@@ -19,32 +19,28 @@ import jupyterlab
 class ViewApp(object):
 
     def __init__(self):
-        self.cwd = os.path.abspath(os.path.dirname(__file__))
-        self.lab_cwd = os.path.join(self.cwd, "notebooks")
-        self.lab_proc = None
         self.lab_version = jupyterlab.__version__
-
-        os.chdir(self.cwd)
+        self.lab_proc = None
 
         self.setup_logging(reset=True)
-        logging.info("hello world")
         self._log = logging.getLogger("JupyterLabView")
 
-        try:
-            with open("config.json") as fp:
-                self.config = json.load(fp)
-        except IOError:
-            self.config = {}
+        self.__this_path = os.path.abspath(os.path.dirname(__file__))
+
+        self.config = self.load_config()
 
         self.lab_python_path = self.config.get("pythonPath", sys.executable)
         self.lab_port = int(self.config.get("labPort", 12580))
+        self.lab_url = "http://localhost:{}".format(self.lab_port)
         self.lab_log_path = self.config.get("labLogPath")
-        self.notebook_config_path = self.config.get(
-            "notebookConfigPath",
+        self.lab_home = self.config.get(
+            "labHome",
+            os.path.join(self.__this_path, "notebooks")
+        )
+        self.notebook_config_path = os.path.join(
+            self.lab_home,
             ".jupyter_notebook_config.py"
         )
-
-        self.lab_url = "http://localhost:{}".format(self.lab_port)
 
     def setup_logging(self, reset=False):
         logger = logging.getLogger()
@@ -63,19 +59,35 @@ class ViewApp(object):
         )
         logger.addHandler(stdout_handler)
 
+    def load_config(self):
+        possible_config_files = [
+            os.path.join(self.__this_path, "config.json"),
+            os.path.join(os.getenv("HOME", "/tmp"), "jupyterlabview.config.json"),
+        ]
+        for config_file in possible_config_files:
+            if os.path.exists(config_file):
+                with open(config_file) as fp:
+                    config = json.load(fp)
+                self._log.info("Load config: %s", config_file)
+                break
+        else:
+            config = {}
+        return config
+
     def launch_jupyterlab(self):
         args = [self.lab_python_path, "-m", "jupyterlab",
                 "--port", str(self.lab_port),
                 "--config", self.notebook_config_path]
         env = os.environ.copy()
-        env["HOME"] = self.lab_cwd
+        env["HOME"] = self.lab_home
+        env["PYTHONIOENCODING"] = "UTF-8"
         stdout = None
         if self.lab_log_path:
             stdout = open(self.lab_log_path, 'ab')
         self._log.info("Launching jupyterlab service")
         proc = subprocess.Popen(
             args,
-            cwd=self.lab_cwd,
+            cwd=self.lab_home,
             env=env,
             shell=False,
             stdout=stdout,

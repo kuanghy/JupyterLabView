@@ -114,5 +114,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# notebooks
+# config or other
 notebooks
+config.json

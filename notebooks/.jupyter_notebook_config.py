@@ -287,7 +287,7 @@ c.NotebookApp.port = 12580
 c.NotebookApp.port_retries = 0
 
 ## DISABLED: use %pylab or %matplotlib in the notebook to enable matplotlib.
-#c.NotebookApp.pylab = 'disabled'
+c.NotebookApp.pylab = 'enable'
 
 ## If True, display a button in the dashboard to quit (shutdown the notebook
 #  server).
